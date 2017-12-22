@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -36,7 +37,9 @@ public class Cliente implements Serializable {
     private String email;
     private String web;
     private PersonaDeContacto contacto;
+    
     private Collection<Factura> facturas;
+    @OneToMany
     private Collection<Proyecto> proyectos;
 
     public String getNif() {

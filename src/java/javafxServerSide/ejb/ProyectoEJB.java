@@ -94,32 +94,39 @@ public class ProyectoEJB implements ProyectoEJBLocal {
         logger.info("ProyectoEJB: Proyecto edited.");
     }
     
+    
     public Collection<Proyecto> getProyectosFiltrados(int tipo, String cif) throws ConsultaProyectoException{
         try{
             Collection p;
-            logger.info("ProyectoEJB: Filtering Proyectos.");
+            logger.info("ProyectoEJB: Filtering proyectos filter.");
             switch (tipo){
                 case 0:
+                    logger.info("ProyectoEJB: Filtering proyectos by findProyectosSinFinalizar.");
                     p = em.createNamedQuery("findProyectosSinFinalizar").getResultList();
                     break;
                     
                 case 1:
+                    logger.info("ProyectoEJB: Filtering proyectos by findProyectosFinalizados.");
                     p = em.createNamedQuery("findProyectosFinalizados").getResultList();
                     break;
                     
                 case 2:
+                    logger.info("ProyectoEJB: Filtering proyectos by findAllProyectos.");
                     p = em.createNamedQuery("findAllProyectos").getResultList();
                     break;
                     
                 case 3:
+                    logger.info("ProyectoEJB: Filtering proyectos by findProyectosCIF.");
                     p = em.createNamedQuery("findProyectosCIF").setParameter("cif", cif).getResultList();
                     break;
                     
                 case 4:
+                    logger.info("ProyectoEJB: Filtering proyectos by findProyectosSinFinalizarCIF.");
                     p = em.createNamedQuery("findProyectosSinFinalizarCIF").setParameter("cif", cif).getResultList();
                     break;
                     
                 case 5:
+                    logger.info("ProyectoEJB: Filtering proyectos by findProyectosFinalizadosCIF.");
                     p = em.createNamedQuery("findProyectosFinalizadosCIF").setParameter("cif", cif).getResultList();
                     break;
                     
@@ -127,8 +134,10 @@ public class ProyectoEJB implements ProyectoEJBLocal {
                     p = em.createNamedQuery("findProyectosSinFinalizar").getResultList();
                     break;
             }
+            logger.info("ProyectoEJB: Proyectos filtered.");
             return p;
         }catch(Exception e){
+            logger.log(Level.SEVERE, "ProyectoEJB: Exception filtering proyectos.{0}", e.getMessage());
             throw new ConsultaProyectoException(e.getMessage());
         }
     }
@@ -136,4 +145,6 @@ public class ProyectoEJB implements ProyectoEJBLocal {
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    
 }
