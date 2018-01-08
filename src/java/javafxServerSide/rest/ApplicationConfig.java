@@ -30,6 +30,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(javafxServerSide.rest.ProyectoREST.class);
+        resources.add(javafxServerSide.rest.ServicioREST.class);
     }
     
 }

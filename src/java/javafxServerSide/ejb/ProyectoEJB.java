@@ -10,7 +10,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafxServerSide.entity.Proyecto;
+import javafxServerSide.entity.Servicio;
 import javafxServerSide.exception.ConsultaProyectoException;
+import javafxServerSide.exception.ConsultaServicioException;
 import javafxServerSide.exception.DeleteProyectoException;
 import javafxServerSide.exception.EditProyectoException;
 import javafxServerSide.exception.NewProyectoException;
@@ -26,14 +28,13 @@ import javax.persistence.PersistenceContext;
 public class ProyectoEJB implements ProyectoEJBLocal {
     
     //logger for the class
-    private static final Logger logger =
-    Logger.getLogger("javafxServerSide.ejb.ProyectoEJB");
+    private static final Logger logger = Logger.getLogger("javafxServerSide.ejb.ProyectoEJB");
     
     @PersistenceContext
     private EntityManager em;
     
     public Proyecto findProyectoById(Integer id) throws ConsultaProyectoException{
-         logger.info("ProyectoEJB: Finding proyecto by id.");
+        logger.info("ProyectoEJB: Finding proyecto by id.");
         return em.find(Proyecto.class, id);
     } 
     
@@ -48,7 +49,7 @@ public class ProyectoEJB implements ProyectoEJBLocal {
             throw new NewProyectoException();
        
         }*/
-         try{
+        try{
              em.persist(proyecto); 
         }catch(Exception e){
             logger.log(Level.SEVERE, "ProyectoEJB: ConsultaProyectoException creating Exception.", e.getMessage());
@@ -131,7 +132,8 @@ public class ProyectoEJB implements ProyectoEJBLocal {
                     break;
                     
                 default:
-                    p = em.createNamedQuery("findProyectosSinFinalizar").getResultList();
+                   logger.info("ProyectoEJB: Filtering proyectos by findAllProyectos.");
+                    p = em.createNamedQuery("findAllProyectos").getResultList();
                     break;
             }
             logger.info("ProyectoEJB: Proyectos filtered.");
@@ -145,6 +147,5 @@ public class ProyectoEJB implements ProyectoEJBLocal {
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-
-    
+ 
 }

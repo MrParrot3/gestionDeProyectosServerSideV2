@@ -8,7 +8,6 @@ package javafxServerSide.rest;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafxServerSide.ejb.ProyectoEJBLocal;
 import javafxServerSide.entity.Proyecto;
 import javafxServerSide.exception.ConsultaProyectoException;
 import javafxServerSide.exception.DeleteProyectoException;
@@ -24,6 +23,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javafxServerSide.ejb.ProyectoEJBLocal;
 
 /**
  *

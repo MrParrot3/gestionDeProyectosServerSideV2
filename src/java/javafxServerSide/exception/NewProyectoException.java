@@ -7,7 +7,7 @@ package javafxServerSide.exception;
 
 /**
  *
- * @author ubuntu
+ * @author Iker Jon Mediavilla
  */
 public class NewProyectoException extends Exception {
 

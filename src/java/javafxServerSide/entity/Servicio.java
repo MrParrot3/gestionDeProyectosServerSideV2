@@ -12,12 +12,36 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  *
- * @author ubuntu
+ * @author Iker Jon Mediavilla
  */
+
 @Entity
+@Table(name="servicio", schema="dindb")
+    @NamedQueries({
+        @NamedQuery(
+            name="findAllServicios",
+            query="select s from Servicio s order by s.id"
+        ),  
+        @NamedQuery(
+            name="findServiciosId",
+            query="select s from Servicio s where p.id like :id order by p.id"
+        ),
+        @NamedQuery(
+            name="findServiciosNombre",
+            query="select s from Servicio s where s.nombre like :nombre order by p.id"
+        ),
+        @NamedQuery(
+            name="findServiciosIdNombre",
+            query="select s from Servicio s where s.nombre like :nombre and p.id like :id order by p.id"
+        )
+    })
+
 public class Servicio implements Serializable {
 
     private static final long serialVersionUID = 1L;
