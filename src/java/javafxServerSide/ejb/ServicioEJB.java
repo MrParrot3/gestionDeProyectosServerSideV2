@@ -14,6 +14,7 @@ import javafxServerSide.exception.ConsultaServicioException;
 import javafxServerSide.exception.DeleteServicioException;
 import javafxServerSide.exception.EditServicioException;
 import javafxServerSide.exception.NewServicioException;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -22,6 +23,7 @@ import javax.persistence.PersistenceContext;
  * @author Iker Jon Mediavilla
  */
 
+@Stateless
 public class ServicioEJB implements ServicioEJBLocal {
 
     private static final Logger logger = Logger.getLogger("javafxServerSide.ejb.ServicioEJB");   
@@ -29,13 +31,11 @@ public class ServicioEJB implements ServicioEJBLocal {
     @PersistenceContext
     private EntityManager em;
     
-    @Override
     public Servicio findServicioById(Integer id) throws ConsultaServicioException {
         logger.info("ServicioEJB: Finding Servicio by id");
         return em.find(Servicio.class, id);
     }
     
-    @Override
     public void newServicio(Servicio servicio) throws NewServicioException {
        logger.info("ServicioEJB: New Servicio.");
        //validates data before inserting
@@ -48,7 +48,6 @@ public class ServicioEJB implements ServicioEJBLocal {
         }
     }
     
-    @Override
     public Collection<Servicio> getAllServicios() throws ConsultaServicioException {
         try{
             logger.info("ServicioEJB: Getting all servicios.");
@@ -60,7 +59,6 @@ public class ServicioEJB implements ServicioEJBLocal {
         }
     }
 
-    @Override
     public void deleteServicio(Servicio servicio) throws DeleteServicioException {
         try{
             logger.info("ServicioEJB: Deleting servicio.");
@@ -73,8 +71,7 @@ public class ServicioEJB implements ServicioEJBLocal {
         }
         logger.info("ServicioEJB: Servicio deleted.");
     }
-
-    @Override
+    
     public void editServicio(Servicio servicio) throws EditServicioException {
         try{
             logger.info("ServicioEJB: Editing servicio.");
@@ -88,7 +85,7 @@ public class ServicioEJB implements ServicioEJBLocal {
         logger.info("ServicioEJB: Servicio edited.");
     }
 
-    @Override
+    
     public Collection<Servicio> getServiciosFiltrados(Integer tipo, Integer id, String nombre) throws ConsultaServicioException {
         try{
             Collection s;
@@ -112,6 +109,7 @@ public class ServicioEJB implements ServicioEJBLocal {
                 case 3:
                     logger.info("ServicioEJB: Filtering servicios by findServiciosIdNombre.");
                     s = em.createNamedQuery("findServiciosIdNombre").getResultList();
+                    break;
                 default:
                     logger.info("ServicioEJB: Filtering servicios by findAllServicios.");
                     s = em.createNamedQuery("findAllServicios").getResultList();

@@ -15,9 +15,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
+ * The Project class encapsulates the data of each project:  
+ * <ul>
+ *  <li><stron>id</strong> is the identifier of the Servicio:</li>
+ * </ul>
+ * 
  * @author Iker Jon Mediavilla
  */
 
@@ -30,18 +35,19 @@ import javax.persistence.Table;
         ),  
         @NamedQuery(
             name="findServiciosId",
-            query="select s from Servicio s where p.id like :id order by p.id"
+            query="select s from Servicio s where s.id like :id order by s.id"
         ),
         @NamedQuery(
             name="findServiciosNombre",
-            query="select s from Servicio s where s.nombre like :nombre order by p.id"
+            query="select s from Servicio s where s.nombre like :nombre order by s.id"
         ),
         @NamedQuery(
             name="findServiciosIdNombre",
-            query="select s from Servicio s where s.nombre like :nombre and p.id like :id order by p.id"
+            query="select s from Servicio s where s.nombre like :nombre and s.id like :id order by s.id"
         )
     })
 
+@XmlRootElement
 public class Servicio implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,7 +56,7 @@ public class Servicio implements Serializable {
     private Integer id;
     private String nombre;
     private String descripcion;
-    @ManyToMany(mappedBy="Servicios")
+    //@ManyToMany(mappedBy="Servicios")
     private Collection<Proyecto> proyectos;
     
 

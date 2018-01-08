@@ -60,7 +60,7 @@ public class ServicioREST {
         }
     }
     
-     @DELETE
+    @DELETE
     @Path("{id}")
     //@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void delete(@PathParam("id") Integer id) throws DeleteServicioException {
@@ -72,7 +72,7 @@ public class ServicioREST {
         }
     }
     
-     @GET
+    @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Servicio find(@PathParam("id") Integer id) {
