@@ -30,5 +30,5 @@ public interface ProyectoEJBLocal {
 
     public void editProyecto(Proyecto proyecto) throws EditProyectoException;    
     
-    public Collection<Proyecto> getProyectosFiltrados(int opc, String cif) throws ConsultaProyectoException;
+    public Collection<Proyecto> getProyectosFiltrados(Integer tipo, String nif) throws ConsultaProyectoException;
 }

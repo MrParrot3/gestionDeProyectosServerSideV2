@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -20,7 +21,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * The Project class encapsulates the data of each project:  
  * <ul>
- *  <li><stron>id</strong> is the identifier of the Servicio:</li>
+ *  <li><stron>id</strong> is the identifier of the service.</li>
+ *  <li><stron>nombre</strong> is the name of the service.</li>
+ *  <li><stron>descripcion</strong> is the description of the service.</li>
+ * <li><stron>proyectos</strong> is the collection of project.</li>
  * </ul>
  * 
  * @author Iker Jon Mediavilla
@@ -56,7 +60,8 @@ public class Servicio implements Serializable {
     private Integer id;
     private String nombre;
     private String descripcion;
-    //@ManyToMany(mappedBy="Servicios")
+    @ManyToMany
+    @JoinTable(name="proyectos_servicios",schema="dindb")
     private Collection<Proyecto> proyectos;
     
 

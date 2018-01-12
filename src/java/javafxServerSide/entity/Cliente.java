@@ -9,38 +9,81 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapsId;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
- * @author ubuntu
+ * This entity class encapsulates the data of each customer.
+ * <ul>
+ *  <li><strong>nif:</strong> It's the tax identification number of a customer. It's the identifier</li>
+ *  <li><strong>nombre:</strong> It's the customer's name</li>
+ *  <li><strong>direccion:</strong> It's the customer's address</li>
+ *  <li><strong>telefono:</strong> It's the customer's phone number</li>
+ *  <li><strong>email:</strong> It's the customer's email address</li>
+ *  <li><strong>web:</strong> It's the customer's website</li>
+ *  <li><strong>contacto:</strong> Object of the PersonaDeContacto class that contains 
+ *                                  the data of the customer's contact person</li>
+ *  <li><strong>facturas:</strong> Collection of objects of the Factura class that 
+ *                                  contains the data of the invoices</li>
+ *  <li><strong>proyectos:</strong> Collection of objects of the Proyecto class that
+ *                                  contains the data of the projects</li>
+ * </ul>
+ * @author Miguel Axier Lafuente Peñas
  */
-
-
 @Entity
-//@Table(name="cliente", schema="dindb")
+@Table(name="cliente", schema="dindb")
+@NamedQueries({
+    @NamedQuery(
+            name="findAllClientes",
+            query="SELECT c FROM Cliente c"
+    ),
+    @NamedQuery(
+            name="findClienteByEmail",
+            query="SELECT c FROM Cliente c WHERE c.email =:email"
+    )
+})
 @XmlRootElement
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String nif;
+    @NotNull
     private String nombre;
+    @NotNull
     private String direccion;
+    @NotNull
     private BigInteger telefono;
+    @NotNull
     private String email;
     private String web;
+    @OneToOne
     private PersonaDeContacto contacto;
-    
+    @OneToMany(mappedBy="cliente")
     private Collection<Factura> facturas;
-    @OneToMany
+    @OneToMany(mappedBy="cliente")
     private Collection<Proyecto> proyectos;
+
+    public Cliente() {
+    }
+
+    public Cliente (String nif,String nombre,String direccion,BigInteger telefono,
+                    String email,String web){
+        this.nif=nif;
+        this.nombre=nombre;
+        this.direccion=direccion;
+        this.telefono=telefono;
+        this.email=email;
+        this.web=web;
+    }
 
     public String getNif() {
         return nif;
@@ -89,7 +132,7 @@ public class Cliente implements Serializable {
     public void setWeb(String web) {
         this.web = web;
     }
-
+    
     public PersonaDeContacto getContacto() {
         return contacto;
     }
@@ -98,6 +141,7 @@ public class Cliente implements Serializable {
         this.contacto = contacto;
     }
 
+    @XmlTransient
     public Collection<Factura> getFacturas() {
         return facturas;
     }
@@ -106,6 +150,7 @@ public class Cliente implements Serializable {
         this.facturas = facturas;
     }
 
+    @XmlTransient
     public Collection<Proyecto> getProyectos() {
         return proyectos;
     }
@@ -121,10 +166,13 @@ public class Cliente implements Serializable {
         hash += (nif != null ? nif.hashCode() : 0);
         return hash;
     }
-
+    /**
+     * Method used to make equal comparison between two objects using the nif attribute.
+     * @param object Object to compare
+     * @return A boolean expression. True if it's the same object and false if it's different.
+     */
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Cliente)) {
             return false;
         }

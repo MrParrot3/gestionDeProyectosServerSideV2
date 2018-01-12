@@ -31,11 +31,13 @@ public class ServicioEJB implements ServicioEJBLocal {
     @PersistenceContext
     private EntityManager em;
     
+    @Override
     public Servicio findServicioById(Integer id) throws ConsultaServicioException {
         logger.info("ServicioEJB: Finding Servicio by id");
         return em.find(Servicio.class, id);
     }
     
+    @Override
     public void newServicio(Servicio servicio) throws NewServicioException {
        logger.info("ServicioEJB: New Servicio.");
        //validates data before inserting
@@ -48,6 +50,7 @@ public class ServicioEJB implements ServicioEJBLocal {
         }
     }
     
+    @Override
     public Collection<Servicio> getAllServicios() throws ConsultaServicioException {
         try{
             logger.info("ServicioEJB: Getting all servicios.");
@@ -58,7 +61,8 @@ public class ServicioEJB implements ServicioEJBLocal {
             throw new ConsultaServicioException(e.getMessage());
         }
     }
-
+    
+    @Override
     public void deleteServicio(Servicio servicio) throws DeleteServicioException {
         try{
             logger.info("ServicioEJB: Deleting servicio.");
@@ -72,6 +76,7 @@ public class ServicioEJB implements ServicioEJBLocal {
         logger.info("ServicioEJB: Servicio deleted.");
     }
     
+    @Override
     public void editServicio(Servicio servicio) throws EditServicioException {
         try{
             logger.info("ServicioEJB: Editing servicio.");
@@ -85,7 +90,7 @@ public class ServicioEJB implements ServicioEJBLocal {
         logger.info("ServicioEJB: Servicio edited.");
     }
 
-    
+    @Override
     public Collection<Servicio> getServiciosFiltrados(Integer tipo, Integer id, String nombre) throws ConsultaServicioException {
         try{
             Collection s;
@@ -98,17 +103,17 @@ public class ServicioEJB implements ServicioEJBLocal {
                     
                 case 1:
                     logger.info("ServicioEJB: Filtering servicios by findServiciosId.");
-                    s = em.createNamedQuery("findServiciosId").getResultList();
+                    s = em.createNamedQuery("findServiciosId").setParameter("id", id).getResultList();
                     break;
                     
                 case 2:
                     logger.info("ServicioEJB: Filtering servicios by findServiciosNombre.");
-                    s = em.createNamedQuery("findServiciosNombre").getResultList();
+                    s = em.createNamedQuery("findServiciosNombre").setParameter("nombre", nombre).getResultList();
                     break;
                     
                 case 3:
                     logger.info("ServicioEJB: Filtering servicios by findServiciosIdNombre.");
-                    s = em.createNamedQuery("findServiciosIdNombre").getResultList();
+                    s = em.createNamedQuery("findServiciosIdNombre").setParameter("id", id).setParameter("nombre", nombre).getResultList();
                     break;
                 default:
                     logger.info("ServicioEJB: Filtering servicios by findAllServicios.");

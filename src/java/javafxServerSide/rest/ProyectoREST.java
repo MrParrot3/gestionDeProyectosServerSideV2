@@ -101,13 +101,13 @@ public class ProyectoREST {
     
     
     @GET
-    @Path("find/{tipo}/{cif}")
+    @Path("find/{tipo}/{nif}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Collection<Proyecto> findProyectosFiltrados(@PathParam("tipo") int tipo, @PathParam("cif") String cif) {
+    public Collection<Proyecto> findProyectosFiltrados(@PathParam("tipo") Integer tipo, @PathParam("nif") String nif) {
         Collection<Proyecto> proyectos = null;
         try{
             logger.log(Level.INFO,"ProyectoRest: Find proyectos filter.");
-            proyectos=ejb.getProyectosFiltrados(tipo, cif);
+            proyectos=ejb.getProyectosFiltrados(tipo, nif);
         }catch(ConsultaProyectoException e){
             logger.log(Level.SEVERE, null, e);
         }

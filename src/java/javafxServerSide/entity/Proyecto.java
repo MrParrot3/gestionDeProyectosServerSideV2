@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 /**
  * The Project class encapsulates the data of each project: 
  * <ul>
- *  <li><stron>id</strong> is the identifier of the Proyecto:</li>
+ *  <li><stron>id</strong> is the identifier of the project.</li>
  *  <li><stron>fechaEstimada</strong> is the expected date of completion of the project.</li> 
  *  <li><stron>fechaFinal</strong> is the date when the project ends.</li>
  *  <li><stron>concepto</strong> is the description of the project.</li>
@@ -33,8 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
  *  <li><stron>importeFinal</strong> is the final price of the project.</li>
  *  <li><stron>horasEstimadas</strong> are the estimated hours it takes to do the project.</li>
  *  <li><stron>horasFinales</strong> are the hours that have taken to make the project.</li>
- *  <li><stron>cliente</strong> are all cliente data.</li>
- *  <li><stron>servicios</strong> is the collection of servicios and the corresponding data of each servicio</li>
+ *  <li><stron>cliente</strong> are all client data.</li>
+ *  <li><stron>servicios</strong> is the collection of services and the corresponding data of each service.</li>
  * </ul>
  * 
  * 
@@ -53,19 +53,19 @@ import javax.xml.bind.annotation.XmlTransient;
         ),  
         @NamedQuery(
             name="findProyectosFinalizados",
-            query="select p from Proyecto p where p.fechaFinal is not null or p.importeFinal!=0 or p.horasFinales!=0 order by p.id"
+            query="select p from Proyecto p where p.fechaFinal is not null and p.horasFinales!=0 or p.importeFinal!=0 and p.horasFinales!=0 order by p.id"
         ),
         @NamedQuery(
-            name="findProyectosCIF",
-            query="select p from Proyecto p where p.cliente like :cif order by p.id"
+            name="findProyectosNIF",
+            query="select p from Proyecto p where p.cliente.nif like :nif order by p.id"
         ),
         @NamedQuery(
-            name="findProyectosSinFinalizarCIF",
-            query="select p from Proyecto p where p.fechaFinal is null or p.importeFinal=0 or p.horasFinales=0 and p.cliente like :cif order by p.id"
+            name="findProyectosSinFinalizarNIF",
+            query="select p from Proyecto p where p.fechaFinal is null or p.importeFinal=0 or p.horasFinales=0 and p.cliente.nif like :nif order by p.id"
         ),
         @NamedQuery(
-            name="findProyectosFinalizadosCIF",
-            query="select p from Proyecto p where p.fechaFinal is not null or p.importeFinal!=0 or p.horasFinales!=0 and p.cliente like :cif order by p.id"
+            name="findProyectosFinalizadosNIF",
+            query="select p from Proyecto p where p.fechaFinal is not null and p.horasFinales!=0 or p.importeFinal!=0 and p.horasFinales!=0 and p.cliente.nif like :nif order by p.id"
         )
     })
 
@@ -85,7 +85,7 @@ public class Proyecto implements Serializable {
     private Integer horasFinales;
     @ManyToOne
     private Cliente cliente;
-    @ManyToMany(mappedBy="Proyectos")
+    @ManyToMany(mappedBy="proyectos")
     private Collection<Servicio> servicios;
     
     public Integer getId() {
