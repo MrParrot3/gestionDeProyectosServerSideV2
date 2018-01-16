@@ -33,12 +33,18 @@ public class ProyectoEJB implements ProyectoEJBLocal {
     @PersistenceContext
     private EntityManager em;
     
+    /**
+     * find a project by id
+     */
     @Override
     public Proyecto findProyectoById(Integer id) throws ConsultaProyectoException{
         logger.info("ProyectoEJB: Finding proyecto by id.");
         return em.find(Proyecto.class, id);
     } 
     
+    /**
+     * create a new project
+     */
     @Override
     public void newProyecto(Proyecto proyecto) throws NewProyectoException{
         logger.info("ProyectoEJB: New Proyecto.");
@@ -58,6 +64,9 @@ public class ProyectoEJB implements ProyectoEJBLocal {
         }
     }
     
+    /**
+     * find all projects
+     */
     @Override
     public Collection<Proyecto> getAllProyectos() throws ConsultaProyectoException{
         try{
@@ -71,6 +80,9 @@ public class ProyectoEJB implements ProyectoEJBLocal {
 
     }
     
+    /** 
+     * delete the project
+    */
     @Override
     public void deleteProyecto(Proyecto proyecto) throws DeleteProyectoException{
         try{
@@ -85,6 +97,9 @@ public class ProyectoEJB implements ProyectoEJBLocal {
         logger.info("ProyectoEJB: Proyecto deleted.");
     }
     
+    /**
+     * edit the project
+     */
     @Override
     public void editProyecto(Proyecto proyecto) throws EditProyectoException{
         try{
@@ -99,6 +114,9 @@ public class ProyectoEJB implements ProyectoEJBLocal {
         logger.info("ProyectoEJB: Proyecto edited.");
     }
     
+    /**
+     * parameterized queries to find project
+     */
     @Override
     public Collection<Proyecto> getProyectosFiltrados(Integer tipo, String nif) throws ConsultaProyectoException{
         try{
@@ -121,17 +139,17 @@ public class ProyectoEJB implements ProyectoEJBLocal {
                     break;
                     
                 case 3:
-                    logger.info("ProyectoEJB: Filtering proyectos by findProyectosCIF.");
+                    logger.info("ProyectoEJB: Filtering proyectos by findProyectosNIF.");
                     p = em.createNamedQuery("findProyectosNIF").setParameter("nif", nif).getResultList();
                     break;
                     
                 case 4:
-                    logger.info("ProyectoEJB: Filtering proyectos by findProyectosSinFinalizarCIF.");
+                    logger.info("ProyectoEJB: Filtering proyectos by findProyectosSinFinalizarNIF.");
                     p = em.createNamedQuery("findProyectosSinFinalizarNIF").setParameter("nif", nif).getResultList();
                     break;
                     
                 case 5:
-                    logger.info("ProyectoEJB: Filtering proyectos by findProyectosFinalizadosCIF.");
+                    logger.info("ProyectoEJB: Filtering proyectos by findProyectosFinalizadosNIF.");
                     p = em.createNamedQuery("findProyectosFinalizadosNIF").setParameter("nif", nif).getResultList();
                     break;
                     

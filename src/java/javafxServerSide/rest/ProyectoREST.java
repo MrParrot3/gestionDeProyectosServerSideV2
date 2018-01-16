@@ -37,7 +37,10 @@ public class ProyectoREST {
     
     @EJB
     private ProyectoEJBLocal ejb;
-
+    
+    /**
+     * create a new project
+     */
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Proyecto proyecto) {
@@ -48,7 +51,10 @@ public class ProyectoREST {
             logger.log(Level.SEVERE, null, e);
         }
     }
-
+    
+    /**
+     * edit the project
+     */  
     @PUT
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(Proyecto proyecto) {
@@ -59,7 +65,9 @@ public class ProyectoREST {
             logger.log(Level.SEVERE, null, e);
         }
     }
-
+    /** 
+     * delete the project finding by id
+     */
     @DELETE
     @Path("{id}")
     //@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -71,7 +79,10 @@ public class ProyectoREST {
             logger.log(Level.SEVERE, null, e);
         }
     }
-
+    
+    /**
+     * find the project by id
+     */
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -85,7 +96,10 @@ public class ProyectoREST {
         }
         return proyecto;
     }
-
+    
+    /**
+     * find all projects
+     */
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Proyecto> findAll() {
@@ -99,7 +113,9 @@ public class ProyectoREST {
         return proyectos;
     }
     
-    
+    /**
+     * parameterized queries to find project
+     */
     @GET
     @Path("find/{tipo}/{nif}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

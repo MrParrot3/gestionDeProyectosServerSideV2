@@ -31,12 +31,18 @@ public class ServicioEJB implements ServicioEJBLocal {
     @PersistenceContext
     private EntityManager em;
     
+    /**
+    *find the service by id
+    */
     @Override
     public Servicio findServicioById(Integer id) throws ConsultaServicioException {
         logger.info("ServicioEJB: Finding Servicio by id");
         return em.find(Servicio.class, id);
     }
     
+    /**
+    * create a new service
+    */
     @Override
     public void newServicio(Servicio servicio) throws NewServicioException {
        logger.info("ServicioEJB: New Servicio.");
@@ -50,6 +56,9 @@ public class ServicioEJB implements ServicioEJBLocal {
         }
     }
     
+    /**
+    *find all service 
+    */
     @Override
     public Collection<Servicio> getAllServicios() throws ConsultaServicioException {
         try{
@@ -62,6 +71,9 @@ public class ServicioEJB implements ServicioEJBLocal {
         }
     }
     
+    /**
+    *delete the service
+    */
     @Override
     public void deleteServicio(Servicio servicio) throws DeleteServicioException {
         try{
@@ -76,6 +88,9 @@ public class ServicioEJB implements ServicioEJBLocal {
         logger.info("ServicioEJB: Servicio deleted.");
     }
     
+    /**
+     * edit the service
+     */
     @Override
     public void editServicio(Servicio servicio) throws EditServicioException {
         try{
@@ -89,7 +104,10 @@ public class ServicioEJB implements ServicioEJBLocal {
         }
         logger.info("ServicioEJB: Servicio edited.");
     }
-
+    
+    /**
+     * parameterized queries to find service
+     */
     @Override
     public Collection<Servicio> getServiciosFiltrados(Integer tipo, Integer id, String nombre) throws ConsultaServicioException {
         try{

@@ -38,6 +38,9 @@ public class ServicioREST {
     @EJB
     private ServicioEJBLocal ejb;
     
+    /**
+    * create a new service
+    */
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Servicio servicio) {
@@ -49,6 +52,9 @@ public class ServicioREST {
         }
     }
     
+    /**
+     * edit the service
+     */
     @PUT
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(Servicio servicio) {
@@ -60,6 +66,9 @@ public class ServicioREST {
         }
     }
     
+    /**
+    *delete the service finding by id
+    */
     @DELETE
     @Path("{id}")
     //@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -72,6 +81,9 @@ public class ServicioREST {
         }
     }
     
+    /**
+    *find the service by id
+    */
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -86,6 +98,9 @@ public class ServicioREST {
         return servicio;
     }
     
+    /**
+    *find all service 
+    */
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Servicio> findAll() {
@@ -99,6 +114,9 @@ public class ServicioREST {
         return servicios;
     }
     
+    /**
+     * parameterized queries to find service
+     */
     @GET
     @Path("find/{tipo}/{id}/{nombre}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
