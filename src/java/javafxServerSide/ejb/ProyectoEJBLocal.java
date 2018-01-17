@@ -20,15 +20,33 @@ import javax.ejb.Local;
 @Local
 public interface ProyectoEJBLocal {
      
+    
     public Proyecto findProyectoById(Integer id) throws ConsultaProyectoException;
     
     public Collection<Proyecto> getAllProyectos() throws ConsultaProyectoException;
      
     public void newProyecto(Proyecto proyecto) throws NewProyectoException;
     
+    /**
+     * delete the project
+     * @param proyecto
+     * @throws DeleteProyectoException 
+     */
     public void deleteProyecto(Proyecto proyecto) throws DeleteProyectoException;
-
+    
+    /**
+     * edit the project
+     * @param proyecto
+     * @throws EditProyectoException 
+     */
     public void editProyecto(Proyecto proyecto) throws EditProyectoException;    
     
+    /**
+     * parameterized queries to find project
+     * @param tipo
+     * @param nif
+     * @return Collection<Proyecto>
+     * @throws ConsultaProyectoException 
+     */
     public Collection<Proyecto> getProyectosFiltrados(Integer tipo, String nif) throws ConsultaProyectoException;
 }

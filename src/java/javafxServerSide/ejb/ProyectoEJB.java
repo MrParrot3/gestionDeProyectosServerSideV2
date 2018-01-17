@@ -33,8 +33,12 @@ public class ProyectoEJB implements ProyectoEJBLocal {
     @PersistenceContext
     private EntityManager em;
     
+    
     /**
      * find a project by id
+     * @param id
+     * @return Proyecto
+     * @throws ConsultaProyectoException 
      */
     @Override
     public Proyecto findProyectoById(Integer id) throws ConsultaProyectoException{
@@ -44,6 +48,8 @@ public class ProyectoEJB implements ProyectoEJBLocal {
     
     /**
      * create a new project
+     * @param proyecto
+     * @throws NewProyectoException 
      */
     @Override
     public void newProyecto(Proyecto proyecto) throws NewProyectoException{
@@ -64,8 +70,11 @@ public class ProyectoEJB implements ProyectoEJBLocal {
         }
     }
     
+    
     /**
      * find all projects
+     * @return Collection<Proyecto>
+     * @throws ConsultaProyectoException 
      */
     @Override
     public Collection<Proyecto> getAllProyectos() throws ConsultaProyectoException{
@@ -79,10 +88,12 @@ public class ProyectoEJB implements ProyectoEJBLocal {
         }
 
     }
-    
-    /** 
+  
+    /**
      * delete the project
-    */
+     * @param proyecto
+     * @throws DeleteProyectoException 
+     */
     @Override
     public void deleteProyecto(Proyecto proyecto) throws DeleteProyectoException{
         try{
@@ -96,9 +107,12 @@ public class ProyectoEJB implements ProyectoEJBLocal {
         }
         logger.info("ProyectoEJB: Proyecto deleted.");
     }
+  
     
     /**
      * edit the project
+     * @param proyecto
+     * @throws EditProyectoException 
      */
     @Override
     public void editProyecto(Proyecto proyecto) throws EditProyectoException{
@@ -116,6 +130,10 @@ public class ProyectoEJB implements ProyectoEJBLocal {
     
     /**
      * parameterized queries to find project
+     * @param tipo
+     * @param nif
+     * @return Collection<Proyecto>
+     * @throws ConsultaProyectoException 
      */
     @Override
     public Collection<Proyecto> getProyectosFiltrados(Integer tipo, String nif) throws ConsultaProyectoException{
