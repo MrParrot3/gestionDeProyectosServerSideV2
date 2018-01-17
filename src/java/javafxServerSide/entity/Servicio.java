@@ -51,7 +51,7 @@ import javax.xml.bind.annotation.XmlRootElement;
         )
     })
 
-@XmlRootElement
+@XmlRootElement(name="servicio")
 public class Servicio implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -60,9 +60,8 @@ public class Servicio implements Serializable {
     private Integer id;
     private String nombre;
     private String descripcion;
-    @ManyToMany
-    @JoinTable(name="proyectos_servicios",schema="dindb")
-    private Collection<Proyecto> proyectos;
+    //@ManyToMany(mappedBy="servicios")
+    //private Collection<Proyecto> proyectos;
     
 
     public Integer getId() {
@@ -89,13 +88,13 @@ public class Servicio implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Collection<Proyecto> getProyectos() {
-        return proyectos;
-    }
-
-    public void setProyectos(Collection<Proyecto> proyectos) {
-        this.proyectos = proyectos;
-    }
+//    public Collection<Proyecto> getProyectos() {
+//        return proyectos;
+//    }
+//
+//    public void setProyectos(Collection<Proyecto> proyectos) {
+//        this.proyectos = proyectos;
+//    }
     
 
     @Override

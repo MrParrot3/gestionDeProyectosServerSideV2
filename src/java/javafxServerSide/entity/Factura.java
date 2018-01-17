@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Past;
 
 /**
@@ -26,6 +27,7 @@ import javax.validation.constraints.Past;
  * </ul>
  * @author Arantzazu Azkona
  */
+@Table(name="factura",schema="dindb")
 @Entity
 public class Factura implements Serializable {
 

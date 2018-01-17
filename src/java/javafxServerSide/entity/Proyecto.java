@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -19,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -85,7 +87,9 @@ public class Proyecto implements Serializable {
     private Integer horasFinales;
     @ManyToOne
     private Cliente cliente;
-    @ManyToMany(mappedBy="proyectos")
+    @ManyToMany
+    @JoinTable(name="proyectos_servicios",schema="dindb")
+    @XmlElement(name="servicioes")
     private Collection<Servicio> servicios;
     
     public Integer getId() {
