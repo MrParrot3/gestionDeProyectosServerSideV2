@@ -21,6 +21,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -89,7 +90,7 @@ public class Proyecto implements Serializable {
     private Cliente cliente;
     @ManyToMany
     @JoinTable(name="proyectos_servicios",schema="dindb")
-    @XmlElement(name="servicioes")
+    @XmlElements(@XmlElement(name="servicio"))
     private Collection<Servicio> servicios;
     
     public Integer getId() {
