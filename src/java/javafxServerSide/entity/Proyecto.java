@@ -90,7 +90,7 @@ public class Proyecto implements Serializable {
     private Cliente cliente;
     @ManyToMany
     @JoinTable(name="proyectos_servicios",schema="dindb")
-    @XmlElements(@XmlElement(name="servicio"))
+    @XmlElement(name="servicio")
     private Collection<Servicio> servicios;
     
     public Integer getId() {
