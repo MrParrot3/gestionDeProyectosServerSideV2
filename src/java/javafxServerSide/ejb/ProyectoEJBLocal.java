@@ -20,11 +20,26 @@ import javax.ejb.Local;
 @Local
 public interface ProyectoEJBLocal {
      
-    
+    /**
+     * find a project by id
+     * @param id
+     * @return Proyecto
+     * @throws ConsultaProyectoException 
+     */
     public Proyecto findProyectoById(Integer id) throws ConsultaProyectoException;
     
+    /**
+     * find all projects
+     * @return Collection<Proyecto>
+     * @throws ConsultaProyectoException 
+     */
     public Collection<Proyecto> getAllProyectos() throws ConsultaProyectoException;
-     
+    
+    /**
+     * create a new project
+     * @param proyecto
+     * @throws NewProyectoException 
+     */
     public void newProyecto(Proyecto proyecto) throws NewProyectoException;
     
     /**
