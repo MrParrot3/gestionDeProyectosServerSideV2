@@ -32,8 +32,11 @@ public class ServicioEJB implements ServicioEJBLocal {
     private EntityManager em;
     
     /**
-    *find the service by id
-    */
+     * find the service by id
+     * @param id
+     * @return Servicio
+     * @throws ConsultaServicioException 
+     */
     @Override
     public Servicio findServicioById(Integer id) throws ConsultaServicioException {
         logger.info("ServicioEJB: Finding Servicio by id");
@@ -41,8 +44,10 @@ public class ServicioEJB implements ServicioEJBLocal {
     }
     
     /**
-    * create a new service
-    */
+     * create a new service
+     * @param servicio
+     * @throws NewServicioException 
+     */
     @Override
     public void newServicio(Servicio servicio) throws NewServicioException {
        logger.info("ServicioEJB: New Servicio.");
@@ -57,8 +62,10 @@ public class ServicioEJB implements ServicioEJBLocal {
     }
     
     /**
-    *find all service 
-    */
+     * find all service 
+     * @return
+     * @throws ConsultaServicioException 
+     */
     @Override
     public Collection<Servicio> getAllServicios() throws ConsultaServicioException {
         try{
@@ -72,8 +79,10 @@ public class ServicioEJB implements ServicioEJBLocal {
     }
     
     /**
-    *delete the service
-    */
+     * delete the service 
+     * @param servicio
+     * @throws DeleteServicioException 
+     */
     @Override
     public void deleteServicio(Servicio servicio) throws DeleteServicioException {
         try{
@@ -87,9 +96,11 @@ public class ServicioEJB implements ServicioEJBLocal {
         }
         logger.info("ServicioEJB: Servicio deleted.");
     }
-    
+
     /**
      * edit the service
+     * @param servicio
+     * @throws EditServicioException 
      */
     @Override
     public void editServicio(Servicio servicio) throws EditServicioException {
@@ -107,6 +118,11 @@ public class ServicioEJB implements ServicioEJBLocal {
     
     /**
      * parameterized queries to find service
+     * @param tipo
+     * @param id
+     * @param nombre
+     * @return Collection<Servicio>
+     * @throws ConsultaServicioException 
      */
     @Override
     public Collection<Servicio> getServiciosFiltrados(Integer tipo, Integer id, String nombre) throws ConsultaServicioException {

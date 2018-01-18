@@ -40,6 +40,7 @@ public class ProyectoREST {
     
     /**
      * create a new project
+     * @param proyecto 
      */
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -54,7 +55,8 @@ public class ProyectoREST {
     
     /**
      * edit the project
-     */  
+     * @param proyecto 
+     */
     @PUT
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(Proyecto proyecto) {
@@ -65,8 +67,11 @@ public class ProyectoREST {
             logger.log(Level.SEVERE, null, e);
         }
     }
-    /** 
+
+    /**
      * delete the project finding by id
+     * @param id
+     * @throws DeleteProyectoException 
      */
     @DELETE
     @Path("{id}")
@@ -82,6 +87,8 @@ public class ProyectoREST {
     
     /**
      * find the project by id
+     * @param id
+     * @return 
      */
     @GET
     @Path("{id}")
@@ -99,6 +106,7 @@ public class ProyectoREST {
     
     /**
      * find all projects
+     * @return Collection<Proyecto>
      */
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -115,6 +123,9 @@ public class ProyectoREST {
     
     /**
      * parameterized queries to find project
+     * @param tipo
+     * @param nif
+     * @return Collection<Proyecto>
      */
     @GET
     @Path("find/{tipo}/{nif}")
