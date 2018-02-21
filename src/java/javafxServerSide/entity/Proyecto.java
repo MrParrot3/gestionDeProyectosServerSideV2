@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javafxServerSite.entity;
+package javafxServerSide.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -12,30 +12,67 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * La clase Proyecto encapsula los datos de cada proyecto: 
+ * The Project class encapsulates the data of each project: 
  * <ul>
- *  <li>id es el identificad ode cada proyecto</li>
- *  <li>fechaEstimada es la fecha prevista de finalizacion el proyecto</li> 
- *  <li>fechaFinal es la fecha en la que se acaba el proyecto</li>
- *  <li>concepto</li>
- *  <li>importeEstimado es el precio que se estima que costara el proyecto</li>
- *  <li>importeFinal es el precio final del proyecto</li>
- *  <li>horasEstimadas son las horas que se estima que se tardara en hacer el proyecto</li>
- *  <li>horasFinales son las </li>
- *  <li>cliente</li>
- *  <li>servicios</li>
+ *  <li><stron>id</strong> is the identifier of the project.</li>
+ *  <li><stron>fechaEstimada</strong> is the expected date of completion of the project.</li> 
+ *  <li><stron>fechaFinal</strong> is the date when the project ends.</li>
+ *  <li><stron>concepto</strong> is the description of the project.</li>
+ *  <li><stron>importeEstimado</strong> is the price estimated to cost the project.</li>
+ *  <li><stron>importeFinal</strong> is the final price of the project.</li>
+ *  <li><stron>horasEstimadas</strong> are the estimated hours it takes to do the project.</li>
+ *  <li><stron>horasFinales</strong> are the hours that have taken to make the project.</li>
+ *  <li><stron>cliente</strong> are all client data.</li>
+ *  <li><stron>servicios</strong> is the collection of services and the corresponding data of each service.</li>
  * </ul>
  * 
  * 
  * @author Iker Jon Mediavilla
  */
 @Entity
+@Table(name="proyecto", schema="dindb")
+    @NamedQueries({
+        @NamedQuery(
+            name="findAllProyectos",
+            query="select p from Proyecto p order by p.id"
+        ),
+        @NamedQuery(
+            name="findProyectosSinFinalizar",
+            query="select p from Proyecto p where p.fechaFinal is null or p.importeFinal=0 or p.horasFinales=0 order by p.id"
+        ),  
+        @NamedQuery(
+            name="findProyectosFinalizados",
+            query="select p from Proyecto p where p.fechaFinal is not null and p.horasFinales!=0 or p.importeFinal!=0 and p.horasFinales!=0 order by p.id"
+        ),
+        @NamedQuery(
+            name="findProyectosNIF",
+            query="select p from Proyecto p where p.cliente.nif like :nif order by p.id"
+        ),
+        @NamedQuery(
+            name="findProyectosSinFinalizarNIF",
+            query="select p from Proyecto p where p.fechaFinal is null or p.importeFinal=0 or p.horasFinales=0 and p.cliente.nif like :nif order by p.id"
+        ),
+        @NamedQuery(
+            name="findProyectosFinalizadosNIF",
+            query="select p from Proyecto p where p.fechaFinal is not null and p.horasFinales!=0 or p.importeFinal!=0 and p.horasFinales!=0 and p.cliente.nif like :nif order by p.id"
+        )
+    })
+
+@XmlRootElement
 public class Proyecto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,9 +88,11 @@ public class Proyecto implements Serializable {
     private Integer horasFinales;
     @ManyToOne
     private Cliente cliente;
-    @ManyToMany(mappedBy="Proyectos")
+    @ManyToMany
+    @JoinTable(name="proyectos_servicios",schema="dindb")
+    @XmlElement(name="servicio")
     private Collection<Servicio> servicios;
-
+    
     public Integer getId() {
         return id;
     }
@@ -126,6 +165,7 @@ public class Proyecto implements Serializable {
         this.cliente = cliente;
     }
 
+    @XmlTransient
     public Collection<Servicio> getServicios() {
         return servicios;
     }
@@ -134,17 +174,18 @@ public class Proyecto implements Serializable {
         this.servicios = servicios;
     }
 
-   
-    
-    
-
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
-
+    
+    /**
+     * Method used to make equal comparison between two ids.
+     * @param object
+     * @return boolean
+     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javafxServerSite.entity;
+package javafxServerSide.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -11,12 +11,47 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
- * @author ubuntu
+ * The Project class encapsulates the data of each project:  
+ * <ul>
+ *  <li><stron>id</strong> is the identifier of the service.</li>
+ *  <li><stron>nombre</strong> is the name of the service.</li>
+ *  <li><stron>descripcion</strong> is the description of the service.</li>
+ * <li><stron>proyectos</strong> is the collection of project.</li>
+ * </ul>
+ * 
+ * @author Iker Jon Mediavilla
  */
+
 @Entity
+@Table(name="servicio", schema="dindb")
+    @NamedQueries({
+        @NamedQuery(
+            name="findAllServicios",
+            query="select s from Servicio s order by s.id"
+        ),  
+        @NamedQuery(
+            name="findServiciosId",
+            query="select s from Servicio s where s.id like :id order by s.id"
+        ),
+        @NamedQuery(
+            name="findServiciosNombre",
+            query="select s from Servicio s where s.nombre like :nombre order by s.id"
+        ),
+        @NamedQuery(
+            name="findServiciosIdNombre",
+            query="select s from Servicio s where s.nombre like :nombre and s.id like :id order by s.id"
+        )
+    })
+
+@XmlRootElement(name="servicio")
 public class Servicio implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -25,7 +60,8 @@ public class Servicio implements Serializable {
     private Integer id;
     private String nombre;
     private String descripcion;
-    private Collection<Proyecto> proyectos;
+    //@ManyToMany(mappedBy="servicios")
+    //private Collection<Proyecto> proyectos;
     
 
     public Integer getId() {
@@ -52,13 +88,13 @@ public class Servicio implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Collection<Proyecto> getProyectos() {
-        return proyectos;
-    }
-
-    public void setProyectos(Collection<Proyecto> proyectos) {
-        this.proyectos = proyectos;
-    }
+//    public Collection<Proyecto> getProyectos() {
+//        return proyectos;
+//    }
+//
+//    public void setProyectos(Collection<Proyecto> proyectos) {
+//        this.proyectos = proyectos;
+//    }
     
 
     @Override
